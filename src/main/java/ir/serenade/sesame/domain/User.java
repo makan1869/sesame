@@ -26,12 +26,12 @@ public class User implements UserDetails {
     boolean passwordDirty = false;
 
 
-    boolean accountNonExpired;
-    boolean accountNonLocked;
-    boolean credentialsNonExpired;
-    boolean enabled;
+    boolean accountNonExpired = true;
+    boolean accountNonLocked = true;
+    boolean credentialsNonExpired = true;
+    boolean enabled = true;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_d", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     Set<Role> roles;
 
