@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,10 +16,14 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     String username;
 
+    @Column(nullable = false)
     String password;
+
+    @Transient
+    boolean passwordDirty = false;
 
 
     boolean accountNonExpired;
@@ -48,6 +53,12 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+        this.passwordDirty = true;
+    }
+
+    public void _setPassword(String password) {
+        this.password = password;
+        this.passwordDirty = false;
     }
 
     public void setAccountNonExpired(boolean accountNonExpired) {
@@ -72,6 +83,13 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public void addRole(Role role) {
+        if(this.roles == null) {
+            this.roles = new HashSet<>();
+        }
+        this.roles.add(role);
     }
 
     @Override
@@ -107,5 +125,9 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public boolean isPasswordDirty() {
+        return passwordDirty;
     }
 }
