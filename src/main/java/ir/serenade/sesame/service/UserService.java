@@ -1,7 +1,8 @@
 package ir.serenade.sesame.service;
 
-import ir.serenade.sesame.domain.Role;
-import ir.serenade.sesame.domain.User;
+import ir.serenade.sesame.domain.entity.Device;
+import ir.serenade.sesame.domain.entity.Role;
+import ir.serenade.sesame.domain.entity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
@@ -12,4 +13,8 @@ public interface UserService extends UserDetailsService {
     Role saveRole(Role role);
 
     User saveUser(User user);
+
+    Device saveDevice(Device device);
+
+    Device findDeviceByUserAndUuid(User user, String deviceId);
 }

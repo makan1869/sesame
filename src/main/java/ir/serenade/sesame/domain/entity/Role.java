@@ -1,25 +1,30 @@
-package ir.serenade.sesame.domain;
+package ir.serenade.sesame.domain.entity;
+
+import ir.serenade.sesame.domain.base.BaseDomain;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
-public class Service {
+public class Role extends BaseDomain implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
+    @Column(unique = true)
     String name;
 
-    @Column(unique = true)
-    String uuid;
+    public Role() {
+    }
 
-    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
-    Set<Product> products;
+    public Role(String name) {
+        this.name = name;
+    }
 
-
-    public Service() {
+    @Override
+    public String getAuthority() {
+        return name;
     }
 
     public Long getId() {
@@ -36,13 +41,5 @@ public class Service {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 }

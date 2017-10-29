@@ -1,9 +1,11 @@
-package ir.serenade.sesame.domain;
+package ir.serenade.sesame.domain.entity;
+
+import ir.serenade.sesame.domain.base.BaseDomain;
 
 import javax.persistence.*;
 
 @Entity
-public class Device {
+public class Device  extends BaseDomain{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
@@ -21,6 +23,13 @@ public class Device {
 
     public Device() {
     }
+
+    public Device(User user, String deviceType, String deviceOS) {
+        this.user = user;
+        this.deviceType = deviceType;
+        this.deviceOS = deviceOS;
+    }
+
 
     public Long getId() {
         return id;
@@ -69,4 +78,6 @@ public class Device {
     public void setDeviceOS(String deviceOS) {
         this.deviceOS = deviceOS;
     }
+
+
 }

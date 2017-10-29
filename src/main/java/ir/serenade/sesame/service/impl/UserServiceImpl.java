@@ -1,7 +1,9 @@
 package ir.serenade.sesame.service.impl;
 
-import ir.serenade.sesame.domain.Role;
-import ir.serenade.sesame.domain.User;
+import ir.serenade.sesame.domain.entity.Device;
+import ir.serenade.sesame.domain.entity.Role;
+import ir.serenade.sesame.domain.entity.User;
+import ir.serenade.sesame.repository.DeviceRepository;
 import ir.serenade.sesame.repository.RoleRepository;
 import ir.serenade.sesame.repository.UserRepository;
 import ir.serenade.sesame.service.UserService;
@@ -22,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    DeviceRepository deviceRepository;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -55,5 +60,15 @@ public class UserServiceImpl implements UserService {
             user._setPassword(passwordEncoder.encode(user.getPassword()));
         }
         return userRepository.save(user);
+    }
+
+    @Override
+    public Device saveDevice(Device device) {
+        return deviceRepository.save(device);
+    }
+
+    @Override
+    public Device findDeviceByUserAndUuid(User user, String deviceId) {
+        return deviceRepository.findDeviceByUserAndUuid(user, deviceId);
     }
 }

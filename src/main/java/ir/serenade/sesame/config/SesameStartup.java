@@ -1,7 +1,7 @@
 package ir.serenade.sesame.config;
 
-import ir.serenade.sesame.domain.Role;
-import ir.serenade.sesame.domain.User;
+import ir.serenade.sesame.domain.entity.Role;
+import ir.serenade.sesame.domain.entity.User;
 import ir.serenade.sesame.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -17,16 +17,16 @@ public class SesameStartup implements ApplicationListener<ApplicationReadyEvent>
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         Role adminRole = userService.findRoleByName("ROLE_ADMIN");
-        if(adminRole == null) {
+        if (adminRole == null) {
             adminRole = userService.saveRole(new Role("ROLE_ADMIN"));
         }
 
         Role userRole = userService.findRoleByName("ROLE_USER");
-        if( userRole == null) {
+        if (userRole == null) {
             userRole = userService.saveRole(new Role("ROLE_USER"));
         }
 
-        if(userService.findUserByUsername("admin") == null) {
+        if (userService.findUserByUsername("admin") == null) {
             User admin = new User();
             admin.setUsername("admin");
             admin.setPassword("password");

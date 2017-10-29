@@ -1,13 +1,12 @@
-package ir.serenade.sesame.domain;
+package ir.serenade.sesame.domain.entity;
+
+import ir.serenade.sesame.domain.base.BaseDomain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-public class Product {
-
-    public static enum Type {
-        FREE, ONE_TIME, CONSUMABLE, TIMELY, TIMELY_WITH_RENEWAL
-    }
+public class Service extends BaseDomain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,12 +17,11 @@ public class Product {
     @Column(unique = true)
     String uuid;
 
-    Type type;
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
+    Set<Product> products;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    Service service;
 
-    public Product() {
+    public Service() {
     }
 
     public Long getId() {
@@ -48,21 +46,5 @@ public class Product {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public Service getService() {
-        return service;
-    }
-
-    public void setService(Service service) {
-        this.service = service;
     }
 }
