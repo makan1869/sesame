@@ -50,7 +50,7 @@ public class DeviceController {
         user.getRoles().forEach(
                 role -> {
                     if (device == null) {
-                        response = new Response(-200, ConstantResponse.uuid_is_not_exist);
+                        response = new Response(404, ConstantResponse.uuid_is_not_exist);
                     } else if (role.getName().equals("ROLE_ADMIN")) {
                         deviceRepository.deleteByUuid(uuid);
                         response = new Response(200, ConstantResponse.device_deleted);

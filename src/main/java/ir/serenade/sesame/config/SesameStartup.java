@@ -33,5 +33,12 @@ public class SesameStartup implements ApplicationListener<ApplicationReadyEvent>
             admin.addRole(adminRole);
             userService.saveUser(admin);
         }
+        if (userService.findUserByUsername("user") == null) {
+            User user = new User();
+            user.setUsername("user");
+            user.setPassword("107894");
+            user.addRole(userRole);
+            userService.saveUser(user);
+        }
     }
 }

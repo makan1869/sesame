@@ -57,11 +57,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .and()
-                .authorizeRequests().antMatchers(HttpMethod.POST, "/security/login").permitAll()
+                .authorizeRequests().antMatchers(HttpMethod.POST, "/api/security/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // We filter the api/login requests
-                .addFilterBefore(new JWTLoginFilter("/security/login", userService, authenticationManager(), tokenAuthenticationService),
+                .addFilterBefore(new JWTLoginFilter("/api/security/login", userService, authenticationManager(), tokenAuthenticationService),
                         UsernamePasswordAuthenticationFilter.class)
                 // And filter other requests to check the presence of JWT in header
                 .addFilterBefore(new JWTAuthenticationFilter(tokenAuthenticationService),
