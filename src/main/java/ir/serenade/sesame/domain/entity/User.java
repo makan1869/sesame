@@ -20,7 +20,6 @@ public class User extends BaseDomain implements UserDetails {
     @Column(unique = true, nullable = false)
     String username;
 
-    @Column(nullable = false)
     String password;
 
     @Transient
@@ -31,6 +30,11 @@ public class User extends BaseDomain implements UserDetails {
     boolean accountNonLocked = true;
     boolean credentialsNonExpired = true;
     boolean enabled = true;
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))

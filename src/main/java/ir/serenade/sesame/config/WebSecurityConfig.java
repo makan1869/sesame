@@ -55,17 +55,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // we don't need CSRF because our token is invulnerable
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/api/Register").permitAll()
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/security/login")
-                .permitAll();
+                .permitAll()
+                .and()
                 // We filter the api/login requests
-//                .addFilterBefore(new JWTLoginFilter("/api/security/login", userService, authenticationManager(), tokenAuthenticationService),
-//                        UsernamePasswordAuthenticationFilter.class)
-//                // And filter other requests to check the presence of JWT in header
-//                .addFilterBefore(new JWTAuthenticationFilter(tokenAuthenticationService),
-//                        UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JWTLoginFilter("/api/security/login", userService, authenticationManager(), tokenAuthenticationService),
+                        UsernamePasswordAuthenticationFilter.class)
+                // And filter other requests to check the presence of JWT in header
+                .addFilterBefore(new JWTAuthenticationFilter(tokenAuthenticationService),
+                        UsernamePasswordAuthenticationFilter.class);
 
         httpSecurity.headers().cacheControl();
     }

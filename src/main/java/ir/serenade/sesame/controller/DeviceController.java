@@ -1,6 +1,7 @@
 package ir.serenade.sesame.controller;
 
 import io.jsonwebtoken.Jwts;
+import io.swagger.annotations.ApiOperation;
 import ir.serenade.sesame.domain.entity.Device;
 import ir.serenade.sesame.domain.entity.User;
 import ir.serenade.sesame.repository.DeviceRepository;
@@ -28,16 +29,16 @@ public class DeviceController {
     private String TOKEN_PREFIX;
 
     Response response = new Response(-200, ConstantResponse.defualt);
-
-    @RequestMapping("/api/security/device/list")
+    @ApiOperation(value = "List of device",response = Response.class)
+    @RequestMapping(path = "/api/security/device/list",method = RequestMethod.GET)
     public @ResponseBody
     Response getListOfDevices() {
         List<Device> devices = deviceRepository.findAll();
         response = new Response(200, devices.toString());
         return response;
     }
-
-    @RequestMapping(path = "/api/security/device/remove/{deviceUuid}")
+    @ApiOperation(value = "Remove device by uuid",response = Response.class)
+    @RequestMapping(path = "/api/security/device/remove/{deviceUuid}", method =RequestMethod.DELETE)
     public @ResponseBody
     Response removeDevice(@PathVariable("deviceUuid") String uuid, @RequestHeader(value = "Authorization") String Jwt) {
         Device device = deviceRepository.findDeviceByUuid(uuid);
