@@ -10,5 +10,4 @@ public class SesameApplication {
         SpringApplication.run(SesameApplication.class, args);
         System.out.println("Server up and running");
     }
-
 }

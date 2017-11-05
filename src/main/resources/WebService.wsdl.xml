@@ -1,0 +1,305 @@
+<definitions
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:tns="urn:SMSAPIwsdl"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:SMSAPIwsdl">
+    <types>
+        <xsd:schema targetNamespace="urn:SMSAPIwsdl">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+            <xsd:complexType name="SendResult">
+                <xsd:all>
+                    <xsd:element name="ID" type="xsd:string" Id="Id"/>
+                    <xsd:element name="Mobile" type="xsd:string" Mobile="Mobile"/>
+                </xsd:all>
+            </xsd:complexType>
+            <xsd:complexType name="SendResultArray">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOAP-ENC:Array">
+                        <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:SendResult[]"/>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="MultipleSendResult">
+                <xsd:all>
+                    <xsd:element name="ID" type="xsd:string" Id="Id"/>
+                </xsd:all>
+            </xsd:complexType>
+            <xsd:complexType name="MultipleSendResultArray">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOAP-ENC:Array">
+                        <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:MultipleSendResult[]"/>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="Destinations">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOAP-ENC:Array">
+                        <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="xsd:string[]"/>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="srcNumbers">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOAP-ENC:Array">
+                        <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="xsd:string[]"/>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="flashs">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOAP-ENC:Array">
+                        <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="xsd:string[]"/>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="checkingMessageIds">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOAP-ENC:Array">
+                        <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="xsd:long[]"/>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="bodys">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOAP-ENC:Array">
+                        <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="xsd:string[]"/>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="ReceiveResult">
+                <xsd:all>
+                    <xsd:element name="ID" type="xsd:string" Id="Id"/>
+                    <xsd:element name="From" type="xsd:string" from="from"/>
+                    <xsd:element name="To" type="xsd:string" to="to"/>
+                    <xsd:element name="Date" type="xsd:string" date="date"/>
+                    <xsd:element name="Body" type="xsd:string" body="body"/>
+                </xsd:all>
+            </xsd:complexType>
+            <xsd:complexType name="ReceiveResultArray">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOAP-ENC:Array">
+                        <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:ReceiveResult[]"/>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="DeliveryResult">
+                <xsd:all>
+                    <xsd:element name="ID" type="xsd:string" Id="Id"/>
+                    <xsd:element name="Status" type="xsd:string" status="status"/>
+                </xsd:all>
+            </xsd:complexType>
+            <xsd:complexType name="DeliveryResultArray">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOAP-ENC:Array">
+                        <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:DeliveryResult[]"/>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+            <xsd:complexType name="Statuses">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOAP-ENC:Array">
+                        <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="xsd:string[]"/>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+        </xsd:schema>
+    </types>
+    <message name="SendMultipleRequest">
+        <part name="username" type="xsd:string"/>
+        <part name="password" type="xsd:string"/>
+        <part name="srcNumbers" type="tns:srcNumbers"/>
+        <part name="bodys" type="tns:bodys"/>
+        <part name="destNos" type="tns:Destinations"/>
+        <part name="flashs" type="tns:flashs"/>
+        <part name="checkingMessageIds" type="tns:checkingMessageIds"/>
+    </message>
+    <message name="SendMultipleResponse">
+        <part name="return" type="tns:MultipleSendResultArray"/>
+    </message>
+    <message name="SendRequest">
+        <part name="username" type="xsd:string"/>
+        <part name="password" type="xsd:string"/>
+        <part name="srcNumber" type="xsd:string"/>
+        <part name="body" type="xsd:string"/>
+        <part name="destNo" type="tns:Destinations"/>
+        <part name="flash" type="xsd:string"/>
+    </message>
+    <message name="SendResponse">
+        <part name="return" type="tns:SendResultArray"/>
+    </message>
+    <message name="ViewReceiveRequest">
+        <part name="username" type="xsd:string"/>
+        <part name="password" type="xsd:string"/>
+        <part name="number" type="xsd:string"/>
+        <part name="id" type="xsd:string"/>
+    </message>
+    <message name="ViewReceiveResponse">
+        <part name="return" type="tns:ReceiveResultArray"/>
+    </message>
+    <message name="DeliveryReportRequest">
+        <part name="username" type="xsd:string"/>
+        <part name="password" type="xsd:string"/>
+        <part name="srcNumber" type="xsd:string"/>
+        <part name="id" type="xsd:string"/>
+        <part name="fromid" type="xsd:string"/>
+    </message>
+    <message name="DeliveryReportResponse">
+        <part name="return" type="tns:DeliveryResultArray"/>
+    </message>
+    <message name="getStatusesRequest">
+        <part name="username" type="xsd:string"/>
+        <part name="password" type="xsd:string"/>
+        <part name="checkingIds" type="tns:checkingMessageIds"/>
+    </message>
+    <message name="getStatusesResponse">
+        <part name="return" type="tns:Statuses"/>
+    </message>
+    <message name="AcknowledgeRequest">
+        <part name="username" type="xsd:string"/>
+        <part name="password" type="xsd:string"/>
+        <part name="checkingIds" type="tns:checkingMessageIds"/>
+    </message>
+    <message name="AcknowledgeResponse">
+        <part name="return" type="tns:Statuses"/>
+    </message>
+    <message name="getStatuses_OriginalIDRequest">
+        <part name="username" type="xsd:string"/>
+        <part name="password" type="xsd:string"/>
+        <part name="checkingIds" type="tns:checkingMessageIds"/>
+    </message>
+    <message name="getStatuses_OriginalIDResponse">
+        <part name="return" type="tns:Statuses"/>
+    </message>
+    <message name="BalanceRequest">
+        <part name="username" type="xsd:string"/>
+        <part name="password" type="xsd:string"/>
+    </message>
+    <message name="BalanceResponse">
+        <part name="return" type="xsd:string"/>
+    </message>
+    <portType name="SMS APIPortType">
+        <operation name="SendMultiple">
+            <documentation>Send SMS</documentation>
+            <input message="tns:SendMultipleRequest"/>
+            <output message="tns:SendMultipleResponse"/>
+        </operation>
+        <operation name="Send">
+            <documentation>Send SMS</documentation>
+            <input message="tns:SendRequest"/>
+            <output message="tns:SendResponse"/>
+        </operation>
+        <operation name="ViewReceive">
+            <documentation>ViewReceive</documentation>
+            <input message="tns:ViewReceiveRequest"/>
+            <output message="tns:ViewReceiveResponse"/>
+        </operation>
+        <operation name="DeliveryReport">
+            <documentation>Delivery Report</documentation>
+            <input message="tns:DeliveryReportRequest"/>
+            <output message="tns:DeliveryReportResponse"/>
+        </operation>
+        <operation name="getStatuses">
+            <documentation>Statuses Report</documentation>
+            <input message="tns:getStatusesRequest"/>
+            <output message="tns:getStatusesResponse"/>
+        </operation>
+        <operation name="Acknowledge">
+            <documentation>Statuses Report</documentation>
+            <input message="tns:AcknowledgeRequest"/>
+            <output message="tns:AcknowledgeResponse"/>
+        </operation>
+        <operation name="getStatuses_OriginalID">
+            <documentation>Statuses Report</documentation>
+            <input message="tns:getStatuses_OriginalIDRequest"/>
+            <output message="tns:getStatuses_OriginalIDResponse"/>
+        </operation>
+        <operation name="Balance">
+            <documentation>User Balance</documentation>
+            <input message="tns:BalanceRequest"/>
+            <output message="tns:BalanceResponse"/>
+        </operation>
+    </portType>
+    <binding name="SMS APIBinding" type="tns:SMS APIPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="SendMultiple">
+            <soap:operation soapAction="urn:SMSAPIwsdl#Send" style="rpc"/>
+            <input>
+                <soap:body  namespace="urn:SMSAPIwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body  namespace="urn:SMSAPIwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <operation name="Send">
+            <soap:operation soapAction="urn:SMSAPIwsdl#Send" style="rpc"/>
+            <input>
+                <soap:body  namespace="urn:SMSAPIwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body  namespace="urn:SMSAPIwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <operation name="ViewReceive">
+            <soap:operation soapAction="urn:SMSAPIwsdl#ViewReceive" style="rpc"/>
+            <input>
+                <soap:body  namespace="urn:SMSAPIwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body  namespace="urn:SMSAPIwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <operation name="DeliveryReport">
+            <soap:operation soapAction="urn:SMSAPIwsdl#DeliveryReport" style="rpc"/>
+            <input>
+                <soap:body  namespace="urn:SMSAPIwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body  namespace="urn:SMSAPIwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <operation name="getStatuses">
+            <soap:operation soapAction="urn:SMSAPIwsdl#getStatuses" style="rpc"/>
+            <input>
+                <soap:body  namespace="urn:SMSAPIwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body  namespace="urn:SMSAPIwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <operation name="Acknowledge">
+            <soap:operation soapAction="urn:SMSAPIwsdl#Acknowledge" style="rpc"/>
+            <input>
+                <soap:body  namespace="urn:SMSAPIwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body  namespace="urn:SMSAPIwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <operation name="getStatuses_OriginalID">
+            <soap:operation soapAction="urn:SMSAPIwsdl#getStatuses" style="rpc"/>
+            <input>
+                <soap:body  namespace="urn:SMSAPIwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body  namespace="urn:SMSAPIwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <operation name="Balance">
+            <soap:operation soapAction="urn:SMSAPIwsdl#return account balance" style="rpc"/>
+            <input>
+                <soap:body  namespace="urn:SMSAPIwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body  namespace="urn:SMSAPIwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="SMS API">
+        <port name="SMS APIPort" binding="tns:SMS APIBinding">
+            <soap:address location="http://panel.candoosms.com/services/index.php"/>
+        </port>
+    </service>
+</definitions>

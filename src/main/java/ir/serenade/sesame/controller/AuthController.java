@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.SendResult;
+import java.util.Random;
 
 @RestController
 public class AuthController {
@@ -29,18 +30,15 @@ public class AuthController {
         System.out.println(user);
         if (user != null) {
             userRepository.save(user);
-        }else {
+        } else {
             System.out.println(ConstantResponse.customer_already_exist);
         }
-        //username = phoneNumber
-        //password = password
-        //srcNumber =98200002020
-        //body = GenerateRandomNumber
-        //desNo = phoneNumber
-       String uri =" https://api.wsdltophp.com/rest/request/v1/send/53d5dbf25871fddb417ca10105ee06ba2022f2a2/846/1.json";
-
+        Random random = new Random();
+        int randomNumber = random.nextInt(1000000);
+        System.out.println(randomNumber);
         return new Response(200, phoneNumber);
     }
+
 
     @ApiOperation(value = "Verify user ", response = Response.class)
     @RequestMapping(path = "/api/security/verify", method = RequestMethod.GET)
