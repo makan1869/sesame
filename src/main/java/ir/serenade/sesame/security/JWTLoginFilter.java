@@ -62,7 +62,6 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         String ua = req.getHeader("User-Agent");
         Parser uaParser = new Parser();
         Client userAgentInfo = uaParser.parse(ua);
-        System.out.println(userAgentInfo.os.family);
         Device device = new Device();
         device.setDeviceName(userAgentInfo.device.family);
         if (auth instanceof User) {
@@ -77,8 +76,12 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         device.setDeviceType(userAgentInfo.userAgent.family);
         device.setUuid(UUID.randomUUID().toString());
         device = userService.saveDevice(device);
-        System.out.println(device.toString());
-        tokenAuthenticationService
-                .addAuthentication(res, auth.getName(), device.getUuid());
+        String username = req.getHeader("username");
+        String confirmCode = req.getHeader("confirmCode");
+        User user = userService.findUserByUsername(username);
+        if (user.getPassword().equals(confirmCode)) {
+            tokenAuthenticationService
+                    .addAuthentication(res, auth.getName(), device.getUuid());
+        }
     }
 }

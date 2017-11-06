@@ -17,7 +17,7 @@ public class User extends BaseDomain implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     String username;
 
     String password;

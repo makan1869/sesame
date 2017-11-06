@@ -1,6 +1,5 @@
 package ir.serenade.sesame.domain.entity;
 
-import io.swagger.annotations.ApiModelProperty;
 import ir.serenade.sesame.domain.base.BaseDomain;
 
 import javax.persistence.*;

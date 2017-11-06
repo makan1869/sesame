@@ -3,6 +3,7 @@ package ir.serenade.sesame.response;
 public class ConstantResponse {
     public static final String success = "SUCCESS";
     public static final String defualt = "";
+    public static final String yor_registration_code_is = "YOUR_REGISTRATION_CODE_IS   ";
     public static final String device_deleted = "DEVICE_DELETED";
     public static final String uuid_is_not_exist = "UUID_IS_NOT _EXIST";
     public static final String forbidden = "FORBIDDEN";
