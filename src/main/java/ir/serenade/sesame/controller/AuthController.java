@@ -3,7 +3,6 @@ package ir.serenade.sesame.controller;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import io.swagger.annotations.ApiOperation;
 import ir.serenade.sesame.domain.entity.User;
 import ir.serenade.sesame.repository.UserRepository;
 import ir.serenade.sesame.response.ConstantResponse;
@@ -35,6 +34,7 @@ public class AuthController {
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
         newUser.setCreateDate(currentTime);
         userRepository.save(newUser);
+
         try {
             HttpResponse<String> res = Unirest.post("http://my.candoosms.com/services/index.php")
                     .header("Content-Type", "text/xml; charset=UTF-8")
@@ -58,13 +58,7 @@ public class AuthController {
         } catch (UnirestException e) {
             e.printStackTrace();
         }
-        return new Response(200, ConstantResponse.yor_registration_code_is + randomNumber);
-    }
 
-    @ApiOperation(value = "Verify user ", response = Response.class)
-    @RequestMapping(path = "/api/security/verify", method = RequestMethod.GET)
-    public @ResponseBody
-    Response verify() {
-        return new Response(200, ConstantResponse.success);
+        return new Response(200, ConstantResponse.yor_registration_code_is + randomNumber);
     }
 }

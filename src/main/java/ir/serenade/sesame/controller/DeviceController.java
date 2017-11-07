@@ -38,7 +38,7 @@ public class DeviceController {
         return response;
     }
     @ApiOperation(value = "Remove device by uuid",response = Response.class)
-    @RequestMapping(path = "/api/security/device/remove/{deviceUuid}", method =RequestMethod.DELETE)
+    @RequestMapping(path = "/api/security/device/remove/{deviceUuid}", method =RequestMethod.GET)
     public @ResponseBody
     Response removeDevice(@PathVariable("deviceUuid") String uuid, @RequestHeader(value = "Authorization") String Jwt) {
         Device device = deviceRepository.findDeviceByUuid(uuid);
