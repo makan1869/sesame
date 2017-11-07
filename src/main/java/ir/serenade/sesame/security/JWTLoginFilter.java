@@ -4,10 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ir.serenade.sesame.domain.entity.Device;
 import ir.serenade.sesame.domain.entity.User;
-import ir.serenade.sesame.repository.UserRepository;
 import ir.serenade.sesame.service.TokenAuthenticationService;
 import ir.serenade.sesame.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,8 +20,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Collections;
-import java.util.Enumeration;
+import java.util.Date;
 import java.util.UUID;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
@@ -78,10 +77,19 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         device = userService.saveDevice(device);
         String username = req.getHeader("username");
         String confirmCode = req.getHeader("confirmCode");
+        Timestamp currentDate = new Timestamp(System.currentTimeMillis());
         User user = userService.findUserByUsername(username);
+        Date createDate = user.getCreateDate();
+        System.out.println(createDate + "  " + currentDate);
+        long timeDiff = currentDate.getTime() - createDate.getTime();
+        long minutesInMilli = 1000 * 60;
+        long different = timeDiff / minutesInMilli;
+        System.out.println(different);
         if (user.getPassword().equals(confirmCode)) {
-            tokenAuthenticationService
-                    .addAuthentication(res, auth.getName(), device.getUuid());
+            if (different <= 5) {
+                tokenAuthenticationService
+                        .addAuthentication(res, auth.getName(), device.getUuid());
+            }
         }
     }
 }

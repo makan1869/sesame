@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,9 +23,30 @@ public class User extends BaseDomain implements UserDetails {
 
     String password;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date createDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date modifyDate;
+
     @Transient
     boolean passwordDirty = false;
 
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
+    }
 
     boolean accountNonExpired = true;
     boolean accountNonLocked = true;
@@ -39,7 +61,6 @@ public class User extends BaseDomain implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     Set<Role> roles;
-
 
     public User() {
     }

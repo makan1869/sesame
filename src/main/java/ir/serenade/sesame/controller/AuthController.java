@@ -11,9 +11,9 @@ import ir.serenade.sesame.response.Response;
 import ir.serenade.sesame.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.Random;
 
 @RestController
@@ -32,6 +32,8 @@ public class AuthController {
         Random random = new Random();
         int randomNumber = random.nextInt(1000000);
         newUser.setPassword(randomNumber + "");
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        newUser.setCreateDate(currentTime);
         userRepository.save(newUser);
         try {
             HttpResponse<String> res = Unirest.post("http://my.candoosms.com/services/index.php")
