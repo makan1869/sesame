@@ -30,12 +30,12 @@ public class UserServiceImpl implements UserService {
     DeviceRepository deviceRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(s);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
         if(user != null) {
             return user;
         } else {
-            throw new UsernameNotFoundException("User with username = " + s + " Not Found");
+            throw new UsernameNotFoundException("User with username = " + username + " Not Found");
         }
     }
 

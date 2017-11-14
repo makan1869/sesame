@@ -1,0 +1,8 @@
+image: maven:4.0.0-jdk-8-alpine
+# These are the default stages.
+# You don't need to explicitly define them.
+# But you could define any stages you want.
+stages:
+  - build
+  - test
+  - deploy
